@@ -9,6 +9,9 @@
      <v-col cols="10" sm="5" md="2">
      <v-btn type="submit" text color="primary" class="addbtn">AddTodo</v-btn>
      </v-col>
+     <v-col cols="10" sm="5" md="2">
+     <v-btn text color="info" class="delbtn" @click="deleteAlldata()">DeleteAll</v-btn>
+     </v-col>
    </v-row>
    </form>
    <ul>
@@ -25,6 +28,7 @@
 <script>
 import draggable from 'vuedraggable'
 import drag from '@branu-jp/v-drag'
+import firebase from "../plugins/firebase"
 
 export default {
  components: { draggable },
@@ -48,6 +52,21 @@ export default {
   deleteTodo (index) {
     // 指定したindexから1個の要素を取り除く
     this.$store.dispatch('sample/deleteTodo', this.todos[index].id)
+  },
+  deleteAlldata () {
+    // data削除
+    firebase.firestore().collection('todos').orderBy("todo", "asc").get()
+        .then((res) => {
+        const ids = []
+        res.forEach(x =>{
+            console.log(x.data().id)
+            ids.push(x.data().id)
+        })
+        for (let i=0; i < ids.length; i++) {
+          console.log(ids[i])
+          firebase.firestore().collection('todos').doc(ids[i]).delete()
+      }
+    })
   },
  },
 }
@@ -81,6 +100,10 @@ html {
 }
 
 .addbtn {
+    margin-top: 10px;
+}
+
+.delbtn {
     margin-top: 10px;
 }
 

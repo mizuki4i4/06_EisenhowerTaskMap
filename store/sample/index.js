@@ -22,7 +22,7 @@ export const actions = {
             commit('getTodos', todos)
         })
     },
-    submitTodo({ dispatch,commit }, todo) {
+    submitTodo({ dispatch, commit}, todo) {
       firebase.firestore().collection('todos').add({})
         .then((res) => {
           firebase.firestore().collection('todos').doc(res.id)
