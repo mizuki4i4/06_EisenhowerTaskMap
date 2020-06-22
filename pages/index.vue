@@ -52,6 +52,7 @@ export default {
   deleteTodo (index) {
     // 指定したindexから1個の要素を取り除く
     this.$store.dispatch('sample/deleteTodo', this.todos[index].id)
+    console.log(this.todos[index].id)
   },
   deleteAlldata () {
     // data削除
@@ -65,8 +66,12 @@ export default {
         for (let i=0; i < ids.length; i++) {
           console.log(ids[i])
           firebase.firestore().collection('todos').doc(ids[i]).delete()
+          this.$store.dispatch('sample/deleteTodo', ids[i])
       }
     })
+    return {
+     todo: ''
+              }
   },
  },
 }
