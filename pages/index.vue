@@ -136,7 +136,7 @@ html {
   background-size: contain;
 }
 .taskcard {
-  color: white;
+  color: white !important;
   font-size: 10px;
   text-align: center;
   position: absolute;
