@@ -1,5 +1,4 @@
 <template>
-
  <div class="page">
    <form @submit.prevent="submitTodo">
   <v-row>
@@ -15,13 +14,36 @@
    </v-row>
    </form>
    <ul>
-     <v-card color="primary" v-for="(todo, index) in todos" :key="todo.id" class="taskcard" v-drag>
+     <v-card color="primary" v-for="(todo, index) in todos" :key="todo.id" class="taskcard" v-drag @mousemove="moveTodo($event, index)">
         {{ todo.todo }}
-        <v-icon @click="deleteTodo(index)" color="white" class="deleteicon">mdi-delete-outline</v-icon>
+        <div class="text-center">
+        <v-dialog v-model="dialog" width="500">
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="white" class="deleteicon1" v-bind="attrs" v-on="on" small>mdi-pencil-outline</v-icon>
+          </template>
+          <v-card>
+            <v-card-title class="headline grey lighten-2" primary-title>
+              TaskDetail
+            </v-card-title>
+            <div>
+              <v-text-field type="text" v-model="taskdetail" placeholder="Edit"></v-text-field>
+            </div>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" @click="submitDetail(index)">
+                SUBMIT
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-icon @click="deleteTodo(index)" color="white" class="deleteicon2" small>mdi-delete-outline</v-icon>
+      </div>
      </v-card>
    </ul>
-   <div class="pagewrap">
-   </div>
+    <div class="pagewrap"></div>
  </div>
 </template>
 
@@ -34,7 +56,9 @@ export default {
  components: { draggable },
  data () {
    return {
-     todo: ''
+     todo: '',
+     dialog: false,
+     taskdetail: '',
    }
  },
  computed: {
@@ -43,6 +67,31 @@ export default {
    }
  },
  methods: {
+   submitDetail (index) {
+      let taskdetail = this.taskdetail
+      let recordid = this.todos[index].id
+      console.log(index)
+      console.log(taskdetail)
+      console.log(recordid)
+      firebase.firestore().collection('todos').doc(recordid).update({
+      taskdetail: taskdetail,
+    })
+     this.taskdetail = ''
+     this.dialog = false
+  },
+   moveTodo (e, index) {
+    // 要素の座標を取得し値を保持
+    let urgent = e.screenX - 743
+    let important = 588 - e.screenY
+    let point = urgent + important
+    // タスクのレコードを取得しidを取得
+    let recordid = this.todos[index].id
+    firebase.firestore().collection('todos').doc(recordid).update({
+      important: important,
+      urgent: urgent,
+      point: point,
+    })
+  },
    submitTodo () {
      if(this.todo) {
        this.$store.dispatch('sample/submitTodo', this.todo)
@@ -69,9 +118,6 @@ export default {
           this.$store.dispatch('sample/deleteTodo', ids[i])
       }
     })
-    return {
-     todo: ''
-              }
   },
  },
 }
@@ -112,7 +158,4 @@ html {
     margin-top: 10px;
 }
 
-.deleteicon {
-  text-align: right;
-}
 </style>

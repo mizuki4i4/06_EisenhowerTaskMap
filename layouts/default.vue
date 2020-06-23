@@ -58,7 +58,7 @@ export default {
         {
           icon: 'mdi-clipboard-text-outline',
           title: 'Tasklist',
-          to: '/inspire'
+          to: '/tasklist'
         }
       ],
       miniVariant: false,
