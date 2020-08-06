@@ -52,8 +52,13 @@ export default {
       items: [
         {
           icon: 'mdi-file-tree',
-          title: 'Eisenhower Taskmap',
-          to: '/'
+          title: 'Project',
+          to: '/project'
+        },
+        {
+          icon: 'mdi-head-snowflake-outline',
+          title: 'Brest',
+          to: '/brest'
         },
         {
           icon: 'mdi-clipboard-text-outline',
