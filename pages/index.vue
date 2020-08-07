@@ -1,60 +1,73 @@
 <template>
-  <div class="home">
-    <v-row align="center" justify="center">
-      <v-col class="text-center" cols="12">
-        <h1>FOTON</h1>
-        <h4>Future Of Telematics. Optimized network </h4>
-      </v-col>
-      <v-btn outlined color="primary" href="http://127.0.0.1:5501/index.html">Signin</v-btn>
-      <v-btn outlined color="warning" router-link to="/Signup">Signup</v-btn>
-    </v-row>
-  </div>
+<ul>
+  <li class="home-image">
+  </li>
+  <li class="home-captions">
+    <div class="home-detail">EisenhowerTaskMap
+      <div class="my-2">
+        <v-btn>Signin</v-btn>
+      </div>
+      <div class="my-2">
+        <v-btn>Signup</v-btn>
+      </div>
+    </div>
+    <div>producted by mizuki0414</div>
+  </li>
+</ul>
+  
 </template>
+
 <script>
+export default {
+  layout: 'home'
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-.v-content__wrap {
-  background-color: black;
-}
+html, body { height: 100%; }
 
 .text-center {
   margin-top: 0px;
 }
 
-h1 {
-  margin-left: auto;
-  margin-right: auto;
-  color: white;
-  font-weight: bold;
-  font-size: 100px;
-  margin-block-start: 1.0em;
-  margin-block-end: 0.1em;
-  animation: 3s fadeIn;
-  opacity: 0.7;
+ul {
+  display: flex;
 }
 
-h4 {
-  color: white;
-  margin-block-end: 0.1em;
-  animation: 3s fadeIn;
-	opacity: 0.7;
+li {
+  list-style: none;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 0.7; }
-}
-
-.home {
-  height: 100%;
-  width: 100%;
+.home-image {
+  width: 62vw;
+  height: 100vh;
   background-image: url("../assets/index.jpg");
   background-size: cover;
   animation: 3s fadeIn;
 }
+
+.home-captions {
+  align-self: center;
+  margin-left: 4vw;
+}
+
+.home-detail {
+  text-align: center;
+  width: 30vw;
+  height: 30vh;
+  margin-left: auto;
+  margin-right: auto;
+  border: solid 3px #000000;
+  background-color: #000000;
+  font-size: 45px;
+  color: white;
+}
+
+/* @keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 0.7; }
+} */
 
 .v-btn:not(.v-btn--round).v-size--default {
   margin-right: 8px;
