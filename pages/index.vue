@@ -5,10 +5,10 @@
   <li class="home-captions">
     <div class="home-detail">EisenhowerTaskMap
       <div class="my-2">
-        <v-btn>Signin</v-btn>
+        <v-btn router-link to="/signup">Signup</v-btn>
       </div>
       <div class="my-2">
-        <v-btn>Signup</v-btn>
+        <v-btn router-link to="/signin">Signin</v-btn>
       </div>
     </div>
     <div>producted by mizuki0414</div>
