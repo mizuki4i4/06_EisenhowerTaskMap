@@ -13,7 +13,7 @@
     <!-- !login -->
     <div class="isLogin_wrap" v-else>
       <div v-if="!isLogin" class="btn_login">
-        <v-btn class="google_login" outlined>Googleでログイン</v-btn>
+        <v-btn class="google_login" outlined @click="googlesignIn">Googleでログイン</v-btn>
       </div>
       <!-- login -->
       <div v-else class="log_wrap">
@@ -46,6 +46,10 @@ export default {
           alert(err.message)
         }
       )
+    },
+    googlesignIn: function () {
+       console.log('googlesignIn')
+       this.$store.dispatch('googlesignIn')
     }
   }
 }

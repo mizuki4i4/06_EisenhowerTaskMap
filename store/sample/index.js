@@ -11,6 +11,17 @@ export const getters = {
 }
 
 export const actions = {
+    googlesignIn() {
+      console.log('login action')
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider).then(function(result) {
+        const user = result.user;
+        console.log('sucess : ' + user)
+      }).catch(function(error) {
+        var errorCode = error.code;
+        console.log('error : ' + errorCode)
+      });
+    }, 
     getTodos({commit}) {
       firebase.firestore().collection('todos').orderBy("todo", "asc").get()
         .then((res) => {

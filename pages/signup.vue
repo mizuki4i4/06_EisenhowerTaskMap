@@ -12,7 +12,7 @@
     <!-- !login -->
     <div class="isLogin_wrap" v-else>
       <div v-if="!isLogin" class="btn_login">
-        <v-btn class="google_login" outlined @click="googleLogin">Googleで登録</v-btn>
+        <v-btn class="google_login" outlined @click="googlesignUp">Googleでlogin</v-btn>
       </div>
       <!-- login -->
       <div v-else class="log_wrap">
