@@ -4,6 +4,7 @@
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
+      src="../assets/index.jpg"
       fixed
       app
     >

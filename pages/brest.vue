@@ -63,7 +63,7 @@ export default {
  },
  computed: {
    todos () {
-     return this.$store.getters['sample/todos']
+     return this.$store.getters['todos']
    }
  },
  methods: {
@@ -94,13 +94,13 @@ export default {
   },
    submitTodo () {
      if(this.todo) {
-       this.$store.dispatch('sample/submitTodo', this.todo)
+       this.$store.dispatch('submitTodo', this.todo)
        this.todo = ''
      }
    },
   deleteTodo (index) {
     // 指定したindexから1個の要素を取り除く
-    this.$store.dispatch('sample/deleteTodo', this.todos[index].id)
+    this.$store.dispatch('deleteTodo', this.todos[index].id)
     console.log(this.todos[index].id)
   },
   deleteAlldata () {
@@ -115,7 +115,7 @@ export default {
         for (let i=0; i < ids.length; i++) {
           console.log(ids[i])
           firebase.firestore().collection('todos').doc(ids[i]).delete()
-          this.$store.dispatch('sample/deleteTodo', ids[i])
+          this.$store.dispatch('deleteTodo', ids[i])
       }
     })
   },

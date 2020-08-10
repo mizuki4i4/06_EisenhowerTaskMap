@@ -4,7 +4,7 @@
     <input type="text" placeholder="Username" v-model="username">
     <input type="password" placeholder="Password" v-model="password">
     <br>
-    <v-btn depressed color="warning" @click="signUp">Register</v-btn>
+    <v-btn class="btn_signUp" outlined @click="signUp">Signup</v-btn>
     <br>
     <div v-if="isWaiting" class="log_wait">
       <p>読み込み中</p>
@@ -12,7 +12,7 @@
     <!-- !login -->
     <div class="isLogin_wrap" v-else>
       <div v-if="!isLogin" class="btn_login">
-        <v-btn class="google_login" outlined @click="googlesignUp">Googleでlogin</v-btn>
+        <v-btn class="google_login" outlined @click="googlesignUp">GoogleでSignin</v-btn>
       </div>
       <!-- login -->
       <div v-else class="log_wrap">
@@ -28,6 +28,7 @@
 import firebase from 'firebase'
 export default {
   name: 'Signup',
+  layout: 'home',
   data () {
     return {
       username: '',
@@ -67,18 +68,29 @@ a {
   color: #42b983;
 }
 .signup {
-  width: 100%;
-  height: 100%;
-  margin-top: 0px;
+  margin-top: 20px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  /* background-image: url(../assets/miles.jpg); */
+  width: 100vw;
+  height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  /* margin-top: 250px;
+  margin-bottom: 250px; */
+  background-image: url(../assets/signup.jpg);
   background-size: cover;
 }
 input {
   margin: 10px 0;
   padding: 10px;
+}
+.google_login{
+  color:white;
+}
+.btn_signUp {
+  color: white;
 }
 </style>

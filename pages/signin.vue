@@ -5,7 +5,7 @@
     <input type="text" placeholder="Username" v-model="username">
     <input type="password" placeholder="Password" v-model="password">
     <br>
-    <v-btn depressed color="primary" @click="signIn">Signin</v-btn>
+      <v-btn class="btn_signIn" outlined @click="signIn">Signin</v-btn>
     <br>
     <div v-if="isWaiting" class="log_wait">
       <p>読み込み中</p>
@@ -13,7 +13,7 @@
     <!-- !login -->
     <div class="isLogin_wrap" v-else>
       <div v-if="!isLogin" class="btn_login">
-        <v-btn class="google_login" outlined @click="googlesignIn">Googleでログイン</v-btn>
+        <v-btn class="google_login" outlined @click="googlesignIn">GoogleでSignin</v-btn>
       </div>
       <!-- login -->
       <div v-else class="log_wrap">
@@ -29,6 +29,7 @@
 import firebase from 'firebase'
 export default {
   name: 'Signin',
+  layout: 'home',
   data: function () {
     return {
       username: '',
@@ -50,6 +51,7 @@ export default {
     googlesignIn: function () {
        console.log('googlesignIn')
        this.$store.dispatch('googlesignIn')
+       this.$router.push('/project')
     }
   }
 }
@@ -72,29 +74,31 @@ li {
 a {
   color: #42b983;
 }
-.signin {
-  margin-top: 20px;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center
-}
+
 input {
   margin: 10px 0;
   padding: 10px;
 }
 .signin {
-  width: 100%;
-  height: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
   margin-left: auto;
   margin-right: auto;
   margin-top: 0px;
   /* margin-top: 250px;
   margin-bottom: 250px; */
-  /* background-image: url(../assets/evgeni.jpg); */
+  background-image: url(../assets/signin.jpg);
   background-size: cover;
 }
 .google_login{
+  color:white;
+}
+.btn_signIn {
   color: white;
 }
 </style>

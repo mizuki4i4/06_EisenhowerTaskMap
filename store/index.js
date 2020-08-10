@@ -1,22 +1,32 @@
-import firebase from "../../plugins/firebase"
+import firebase from "../plugins/firebase"
 
 export const state = () => ({
     todos: [],
+    userUid: '',
+    userName: ''
 })
 
 export const getters = {
     todos: state => {
-        return state.todos
+      return state.todos
     },
+    getUserUid(state) {
+      return state.userUid
+    },
+    getUserName(state) {
+      return state.userName
+    }
 }
 
 export const actions = {
-    googlesignIn() {
+    googlesignIn({ commit }) {
       console.log('login action')
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider).then(function(result) {
         const user = result.user;
-        console.log('sucess : ' + user)
+        console.log('sucess : ' + user.uid + ' : ' + user.displayName )
+        commit('setUserUid', user.uid)
+        commit('setUserName', user.displayName)
       }).catch(function(error) {
         var errorCode = error.code;
         console.log('error : ' + errorCode)
@@ -59,4 +69,10 @@ export const mutations = {
     deleteTodo (state, index) {
         state.todos.splice(index, 1)
     },
+    setUserUid (state,userUid) {
+        state.userUid = userUid
+    },
+    setUserName (state,userName) {
+        state.userName = userName
+    }
 }
