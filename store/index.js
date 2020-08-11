@@ -3,7 +3,8 @@ import firebase from "../plugins/firebase"
 export const state = () => ({
     todos: [],
     userUid: '',
-    userName: ''
+    userName: '',
+    userPhotoURL: ''
 })
 
 export const getters = {
@@ -15,6 +16,9 @@ export const getters = {
     },
     getUserName(state) {
       return state.userName
+    },
+    getUserPhotoURL(state) {
+      return state.userPhotoURL
     }
 }
 
@@ -24,9 +28,11 @@ export const actions = {
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider).then(function(result) {
         const user = result.user;
-        console.log('sucess : ' + user.uid + ' : ' + user.displayName )
+        console.log('success : ' + user.uid + ' : ' + user.displayName + ' : ' + user.photoURL)
+        console.log(user.photoURL)
         commit('setUserUid', user.uid)
         commit('setUserName', user.displayName)
+        commit('setUserPhotoURL', user.photoURL)
       }).catch(function(error) {
         var errorCode = error.code;
         console.log('error : ' + errorCode)
@@ -74,5 +80,8 @@ export const mutations = {
     },
     setUserName (state,userName) {
         state.userName = userName
+    },
+    setUserPhotoURL (state,userPhotoURL) {
+        state.userPhotoURL = userPhotoURL
     }
 }

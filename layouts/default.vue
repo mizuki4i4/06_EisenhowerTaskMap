@@ -33,7 +33,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <img src="../assets/todo.png" width="40" height="40">
+      <img :src="photoURL" width="40" height="40">
     </v-app-bar>
     <v-content>
       <v-container>
@@ -70,8 +70,17 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Eisenhower Taskmap'
+      title: 'Eisenhower Taskmap',
+      photoURL: ''
     }
+  },
+  mounted() {
+    this.$store.watch(
+      (state, getters) => getters.getUserPhotoURL,
+      (newValue, oldValue) => {
+        this.photoURL = newValue
+      }
+    )
   }
 }
 </script>
