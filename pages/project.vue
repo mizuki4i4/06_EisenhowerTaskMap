@@ -55,7 +55,7 @@
       <v-card
         width="250px"
         height="200px"
-        v-for="n in 3"
+        v-for="n in projectnum"
         :key="n"
         class="pa-2"
         outlined
@@ -77,7 +77,7 @@ export default {
   data () {
     return {
       dialog: false,
-      projectnum: ''
+      projectnum: this.$store.getters.userProjectsNum
     }
   },
   methods: {
@@ -91,6 +91,7 @@ export default {
         projectname: projectname,
         projectdetail: projectdetail
       })
+      console.log(this.projectnum)
     }
   }
 }

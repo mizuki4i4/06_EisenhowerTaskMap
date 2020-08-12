@@ -4,7 +4,9 @@ export const state = () => ({
     todos: [],
     userUid: '',
     userName: '',
-    userPhotoURL: ''
+    userPhotoURL: '',
+    userProjects: [],
+    userProjectsNum: ''
 })
 
 export const getters = {
@@ -19,6 +21,12 @@ export const getters = {
     },
     getUserPhotoURL(state) {
       return state.userPhotoURL
+    },
+    getUserProjects(state) {
+      return state.userProjects
+    },
+    getUserProjectsNum(state) {
+      return state.userProjectsNum
     }
 }
 
@@ -33,6 +41,18 @@ export const actions = {
         commit('setUserUid', user.uid)
         commit('setUserName', user.displayName)
         commit('setUserPhotoURL', user.photoURL)
+        firebase.firestore().collection('projects').where("userUid", "==", user.uid).get()
+          .then((res) => {
+            const projects = []
+            res.forEach(x =>{
+              console.log(x.data())
+              projects.push(x.data().projectname)
+          })
+          console.log(projects)
+          let userProjectsNum = projects.length
+          commit('setUserProjects', projects)
+          commit('setUserProjectsNum', userProjectsNum)
+        })
       }).catch(function(error) {
         var errorCode = error.code;
         console.log('error : ' + errorCode)
@@ -40,14 +60,14 @@ export const actions = {
     }, 
     getTodos({commit}) {
       firebase.firestore().collection('todos').orderBy("todo", "asc").get()
-        .then((res) => {
-            const todos = []
-            res.forEach(x =>{
-                console.log(x.data())
-                todos.push(x.data())
-            })
-            commit('getTodos', todos)
-        })
+      .then((res) => {
+          const todos = []
+          res.forEach(x =>{
+              console.log(x.data())
+              todos.push(x.data())
+          })
+        commit('getTodos', todos)
+      })
     },
     submitTodo({ dispatch, commit}, todo) {
       firebase.firestore().collection('todos').add({})
@@ -83,5 +103,11 @@ export const mutations = {
     },
     setUserPhotoURL (state,userPhotoURL) {
         state.userPhotoURL = userPhotoURL
-    }
+    },
+    setUserProjects (state,userProjects) {
+        state.userProjects = userProjects
+    },
+    setUserProjectsNum (state,userProjectsNum) {
+        state.userProjectsNum = userProjectsNum
+    }    
 }
