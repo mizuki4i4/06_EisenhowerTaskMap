@@ -1,8 +1,8 @@
 <template>
   <div class="project_wrapper">
     <h2>Your Projects</h2>
+    <br>
     <v-container class="grey lighten-5">
-
       <v-card
         class="d-flex align-content-start flex-wrap"
         color="grey lighten-5"
@@ -10,7 +10,6 @@
         tile
         min-height="200"
       >
-
       <v-card
         width="250px"
         height="200px"
@@ -20,14 +19,43 @@
       >
         <div class="project-add">
           <p>Add Project</p>
-          <v-icon large color="blue darken-2">mdi-plus</v-icon>
+          <v-icon large color="blue darken-2" @click.stop="dialog = true">mdi-plus</v-icon>
+            <v-dialog v-model="dialog" max-width="500">
+              <v-card>
+                <v-card-title class="headline">プロジェクト追加</v-card-title>
+                  <v-card-text>
+                    プロジェクト名・詳細を記入
+                  </v-card-text>
+                  <div class="project_input">
+                    <v-text-field  v-model="projectname" label="プロジェクト名" required></v-text-field>
+                    <v-text-field  v-model="projectdetail" label="プロジェクト詳細" required></v-text-field>
+                  </div>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="green darken-1"
+                    text
+                    @click="dialog = false"
+                  >
+                    Cancell
+                  </v-btn>
+                  <v-btn
+                    color="green darken-1"
+                    text
+                    @click="addProject"
+                  >
+                    Add Project
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
         </div>
       </v-card>
 
       <v-card
         width="250px"
         height="200px"
-        v-for="n in 10"
+        v-for="n in 3"
         :key="n"
         class="pa-2"
         outlined
@@ -38,8 +66,35 @@
 
       </v-card>
     </v-container>
+    <div class="project_bottom_text" >
+      <p>プロジェクトを選択してBrestしよう</p>
+    </div>
   </div>
 </template>
+<script>
+import firebase from "../plugins/firebase"
+export default {
+  data () {
+    return {
+      dialog: false,
+      projectnum: ''
+    }
+  },
+  methods: {
+    addProject: function () {
+       console.log('addProject')
+       let userUid = this.$store.getters.getUserUid
+       let projectname = this.projectname
+       let projectdetail = this.projectdetail
+       firebase.firestore().collection('projects').doc().set({
+        userUid: userUid,
+        projectname: projectname,
+        projectdetail: projectdetail
+      })
+    }
+  }
+}
+</script>
 
 <style scoped>
 .project_wrapper {
@@ -73,5 +128,18 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 50px;
+}
+.project_input {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 400px;
+}
+.project_bottom_text {
+  margin-top: 50px;
+  text-align: center;
+}
+.grey lighten-5 {
+  margin-top: 50px !important;
 }
 </style>
