@@ -1,6 +1,12 @@
 <template>
  <div class="page">
-   <form @submit.prevent="submitTodo">
+  <br>
+  <div class="text_wrap">
+    <h1>Sample Projects</h1>
+    <h5>Sample Projects</h5>
+  </div>
+  <br>
+  <form @submit.prevent="submitTodo">
   <v-row>
      <v-col cols="10" sm="5" md="2">
      <v-text-field v-model="todo" type="text" placeholder="Edit"></v-text-field>
@@ -13,7 +19,7 @@
      </v-col>
    </v-row>
    </form>
-   <ul>
+   <div>
      <v-card color="primary" v-for="(todo, index) in todos" :key="todo.id" class="taskcard" v-drag @mousemove="moveTodo($event, index)">
         {{ todo.todo }}
         <div class="text-center">
@@ -42,8 +48,9 @@
         <v-icon @click="deleteTodo(index)" color="white" class="deleteicon2" small>mdi-delete-outline</v-icon>
       </div>
      </v-card>
-   </ul>
-    <div class="pagewrap"></div>
+   </div>
+    <div class="pagewrap">
+    </div>
  </div>
 </template>
 
@@ -67,7 +74,7 @@ export default {
    }
  },
  methods: {
-   submitDetail (index) {
+  submitDetail (index) {
       let taskdetail = this.taskdetail
       let recordid = this.todos[index].id
       console.log(index)
@@ -79,7 +86,7 @@ export default {
      this.taskdetail = ''
      this.dialog = false
   },
-   moveTodo (e, index) {
+  moveTodo (e, index) {
     // 要素の座標を取得し値を保持
     let urgent = e.screenX - 743
     let important = 588 - e.screenY
@@ -92,7 +99,7 @@ export default {
       point: point,
     })
   },
-   submitTodo () {
+  submitTodo () {
      if(this.todo) {
        this.$store.dispatch('submitTodo', this.todo)
        this.todo = ''
@@ -129,9 +136,11 @@ html {
   color: white;
 }
 .pagewrap {
-  margin-left: 100px;
-  width: 1100px;
-  height: 620px;
+  /* margin-left: 100px; */
+  margin-left: auto;
+  margin-right: auto;
+  width: 80vw;
+  height: 70vh;
   background-image: url(../assets/matrix.png);
   background-size: contain;
 }
@@ -149,11 +158,9 @@ html {
   cursor: grabbing;
   top: 150px;
 }
-
 .addbtn {
     margin-top: 10px;
 }
-
 .delbtn {
     margin-top: 10px;
 }

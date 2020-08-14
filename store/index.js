@@ -6,6 +6,7 @@ export const state = () => ({
     userName: '',
     userPhotoURL: '',
     userProjects: [],
+    userProjectdetails: [],
     userProjectsNum: ''
 })
 
@@ -25,6 +26,9 @@ export const getters = {
     getUserProjects(state) {
       return state.userProjects
     },
+    getUserProjects(state) {
+      return userProjectdetails
+    },
     getUserProjectsNum(state) {
       return state.userProjectsNum
     }
@@ -43,14 +47,17 @@ export const actions = {
         commit('setUserPhotoURL', user.photoURL)
         firebase.firestore().collection('projects').where("userUid", "==", user.uid).get()
           .then((res) => {
-            const projects = []
+            let projects = []
+            let projectdetails = []
             res.forEach(x =>{
               console.log(x.data())
               projects.push(x.data().projectname)
+              projectdetails.push(x.data().projectdetail)
           })
           console.log(projects)
           let userProjectsNum = projects.length
           commit('setUserProjects', projects)
+          commit('setUserProjectdetails', projectdetails)
           commit('setUserProjectsNum', userProjectsNum)
         })
       }).catch(function(error) {
@@ -58,7 +65,28 @@ export const actions = {
         console.log('error : ' + errorCode)
       });
     }, 
-    getTodos({commit}) {
+    addProjects({ commit }) {
+      commit('setUserProjects', '')
+      commit('setUserProjectdetails', '')
+      commit('setUserProjectsNum', '')
+      console.log(this.state.userUid)
+        firebase.firestore().collection('projects').where("userUid", "==", this.state.userUid).get()
+          .then((res) => {
+            let projects = []
+            let projectdetails = []
+            res.forEach(x =>{
+              console.log(x.data())
+              projects.push(x.data().projectname)
+              projectdetails.push(x.data().projectdetail)
+          })
+          console.log(projects)
+          let userProjectsNum = projects.length
+          commit('setUserProjects', projects)
+          commit('setUserProjectdetails', projectdetails)
+          commit('setUserProjectsNum', userProjectsNum)
+      })
+    },
+    getTodos({ commit }) {
       firebase.firestore().collection('todos').orderBy("todo", "asc").get()
       .then((res) => {
           const todos = []
@@ -106,6 +134,9 @@ export const mutations = {
     },
     setUserProjects (state,userProjects) {
         state.userProjects = userProjects
+    },
+    setUserProjectdetails (state,userProjectdetails) {
+        state.userProjectdetails = userProjectdetails
     },
     setUserProjectsNum (state,userProjectsNum) {
         state.userProjectsNum = userProjectsNum

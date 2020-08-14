@@ -1,6 +1,6 @@
 <template>
   <div class="project_wrapper">
-    <h2>Your Projects</h2>
+    <h1>Your Projects</h1>
     <br>
     <v-container class="grey lighten-5">
       <v-card
@@ -60,8 +60,13 @@
         class="pa-2"
         outlined
         tile
+        @click="gobrest"
       >
-          Flex item
+      <div class="project-add">
+        <p>{{ $store.state.userProjects[n-1] }}</p>
+        <v-icon>mdi-head-snowflake-outline</v-icon>
+        <v-card-text>{{ $store.state.userProjectdetails[n-1] }}</v-card-text>
+      </div>
       </v-card>
 
       </v-card>
@@ -77,7 +82,6 @@ export default {
   data () {
     return {
       dialog: false,
-      projectnum: this.$store.getters.userProjectsNum
     }
   },
   methods: {
@@ -91,7 +95,24 @@ export default {
         projectname: projectname,
         projectdetail: projectdetail
       })
-      console.log(this.projectnum)
+      this.$store.dispatch('addProjects')
+      this.dialog = false
+    },
+    gobrest: function () {
+       this.$router.push('/brest')
+    }
+  },
+  mounted() {
+    this.$store.watch(
+      (state, getters) => getters.getUserProjectsNum,
+      (newValue, oldValue) => {
+        this.projectnum = newValue
+      }
+    )
+  },
+  computed: {
+    projectnum() {
+      return this.$store.state.userProjectsNum
     }
   }
 }
@@ -119,6 +140,19 @@ export default {
   /* margin-right: auto; */
   margin-top: 10px;
   border-radius: 10px !important;
+
+}
+.pa-2:active {
+  animation: flash 3s;
+  margin-left: 30px;
+  /* margin-right: auto; */
+  margin-top: 10px;
+  border-radius: 10px !important;
+}
+@keyframes flash {
+	0% { background: #20b2aa; }
+	10% { background: #96e9e6; }
+	100% { background: #20b2aa; }
 }
 .grey.lighten-5 {
   text-align: center;
@@ -128,7 +162,7 @@ export default {
   height: 100px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
+  margin-top: 45px;
 }
 .project_input {
   margin-left: auto;
@@ -142,5 +176,10 @@ export default {
 }
 .grey lighten-5 {
   margin-top: 50px !important;
+}
+
+.v-card__subtitle, .v-card__text, .v-card__title {
+    font-size: 0.675rem;
+    padding: 10px;
 }
 </style>
