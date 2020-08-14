@@ -7,7 +7,8 @@ export const state = () => ({
     userPhotoURL: '',
     userProjects: [],
     userProjectdetails: [],
-    userProjectsNum: ''
+    userProjectsNum: '',
+    userSelectindex: ''
 })
 
 export const getters = {
@@ -31,6 +32,9 @@ export const getters = {
     },
     getUserProjectsNum(state) {
       return state.userProjectsNum
+    },
+    getUserSlectindex(state) {
+      return state.userSelectindex
     }
 }
 
@@ -86,6 +90,9 @@ export const actions = {
           commit('setUserProjectsNum', userProjectsNum)
       })
     },
+    selectProjects({ commit }, index) {
+      commit('setUserSlectindex', index)
+    },
     getTodos({ commit }) {
       firebase.firestore().collection('todos').orderBy("todo", "asc").get()
       .then((res) => {
@@ -97,7 +104,7 @@ export const actions = {
         commit('getTodos', todos)
       })
     },
-    submitTodo({ dispatch, commit}, todo) {
+    submitTodo({ commit, dispatch}, todo) {
       firebase.firestore().collection('todos').add({})
         .then((res) => {
           firebase.firestore().collection('todos').doc(res.id)
@@ -140,5 +147,8 @@ export const mutations = {
     },
     setUserProjectsNum (state,userProjectsNum) {
         state.userProjectsNum = userProjectsNum
+    },    
+    setUserSlectindex (state,userSelectindex) {
+        state.userSelectindex = userSelectindex
     }    
 }

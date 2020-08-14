@@ -30,23 +30,23 @@
                     <v-text-field  v-model="projectname" label="プロジェクト名" required></v-text-field>
                     <v-text-field  v-model="projectdetail" label="プロジェクト詳細" required></v-text-field>
                   </div>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color="green darken-1"
-                    text
-                    @click="dialog = false"
-                  >
-                    Cancell
-                  </v-btn>
-                  <v-btn
-                    color="green darken-1"
-                    text
-                    @click="addProject"
-                  >
-                    Add Project
-                  </v-btn>
-                </v-card-actions>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="green darken-1"
+                      text
+                      @click="dialog = false"
+                    >
+                      Cancell
+                    </v-btn>
+                    <v-btn
+                      color="green darken-1"
+                      text
+                      @click="addProject"
+                    >
+                      Add Project
+                    </v-btn>
+                  </v-card-actions>
               </v-card>
             </v-dialog>
         </div>
@@ -55,12 +55,12 @@
       <v-card
         width="250px"
         height="200px"
-        v-for="n in projectnum"
+        v-for="(n, index) in projectnum"
         :key="n"
         class="pa-2"
         outlined
         tile
-        @click="gobrest"
+        @click="selectProject(index)"
       >
       <div class="project-add">
         <p>{{ $store.state.userProjects[n-1] }}</p>
@@ -98,8 +98,9 @@ export default {
       this.$store.dispatch('addProjects')
       this.dialog = false
     },
-    gobrest: function () {
-       this.$router.push('/brest')
+    selectProject: function (index) {
+      this.$store.dispatch("selectProjects",index)
+      this.$router.push('/brest')
     }
   },
   mounted() {

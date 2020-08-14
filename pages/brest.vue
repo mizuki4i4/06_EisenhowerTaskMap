@@ -2,8 +2,8 @@
  <div class="page">
   <br>
   <div class="text_wrap">
-    <h1>Sample Projects</h1>
-    <h5>Sample Projects</h5>
+    <h1>{{ $store.state.userProjects[$store.state.userSelectindex] }}</h1>
+    <h5>{{ $store.state.userProjectdetails[$store.state.userSelectindex] }}</h5>
   </div>
   <br>
   <form @submit.prevent="submitTodo">
@@ -116,8 +116,8 @@ export default {
         .then((res) => {
         const ids = []
         res.forEach(x =>{
-            console.log(x.data().id)
-            ids.push(x.data().id)
+          console.log(x.data().id)
+          ids.push(x.data().id)
         })
         for (let i=0; i < ids.length; i++) {
           console.log(ids[i])
