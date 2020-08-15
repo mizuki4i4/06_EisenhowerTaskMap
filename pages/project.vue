@@ -1,6 +1,6 @@
 <template>
   <div class="project_wrapper">
-    <h1>Your Projects</h1>
+    <h1>Select your projects</h1>
     <br>
     <v-container class="grey lighten-5">
       <v-card

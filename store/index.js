@@ -94,7 +94,7 @@ export const actions = {
       commit('setUserSlectindex', index)
     },
     getTodos({ commit }) {
-      firebase.firestore().collection('todos').orderBy("todo", "asc").get()
+      firebase.firestore().collection('todos').where("projectname", "==", this.state.userProjects[this.state.userSelectindex]).get()
       .then((res) => {
           const todos = []
           res.forEach(x =>{
@@ -105,12 +105,14 @@ export const actions = {
       })
     },
     submitTodo({ commit, dispatch}, todo) {
+      let projectname = this.state.userProjects[this.state.userSelectindex]
       firebase.firestore().collection('todos').add({})
         .then((res) => {
           firebase.firestore().collection('todos').doc(res.id)
             .set({
               todo: todo,
               id: res.id,
+              projectname: projectname,
             }).then(() => {
               dispatch('getTodos')
               console.log(todo, res.id)

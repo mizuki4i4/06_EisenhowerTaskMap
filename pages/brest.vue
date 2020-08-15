@@ -12,10 +12,10 @@
      <v-text-field v-model="todo" type="text" placeholder="Edit"></v-text-field>
      </v-col>
      <v-col cols="10" sm="5" md="2">
-     <v-btn type="submit" text color="primary" class="addbtn">AddTodo</v-btn>
+     <v-btn type="submit" outlined color="primary" class="addbtn">AddTodo</v-btn>
      </v-col>
      <v-col cols="10" sm="5" md="2">
-     <v-btn text color="info" class="delbtn" @click="deleteAlldata()">DeleteAll</v-btn>
+     <v-btn outlined color="info" class="delbtn" @click="deleteAlldata()">DeleteAll</v-btn>
      </v-col>
    </v-row>
    </form>
@@ -112,7 +112,7 @@ export default {
   },
   deleteAlldata () {
     // data削除
-    firebase.firestore().collection('todos').orderBy("todo", "asc").get()
+    firebase.firestore().collection('todos').where("projectname", "==", this.$store.state.userProjects[this.$store.state.userSelectindex]).get()
         .then((res) => {
         const ids = []
         res.forEach(x =>{
@@ -160,6 +160,7 @@ html {
 }
 .addbtn {
     margin-top: 10px;
+    margin-left: 15px;
 }
 .delbtn {
     margin-top: 10px;
