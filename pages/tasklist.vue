@@ -7,7 +7,9 @@
     </div>
     <br>
     <div>
-      <v-btn type="submit" text color="primary" class="addbtn" @click="ShowTaskList()">ShowTaskList</v-btn>
+      <v-btn type="submit" outlined color="primary" class="addbtn" @click="ShowTaskList()">ShowTaskList</v-btn>
+      <br>
+      <br>
       <ul>
         <li v-for="item in datalist">
           <v-card class="mx-auto" tile>
